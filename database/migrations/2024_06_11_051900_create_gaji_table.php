@@ -11,7 +11,8 @@ class CreateGajiTable extends Migration
         Schema::create('gajis', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('karyawan_id');
-            $table->date('tanggal_gajian');
+            $table->integer('bulan')->after('karyawan_id')->nullable(false);
+            $table->integer('tahun')->after('bulan')->nullable(false);
             $table->decimal('gaji_pokok', 15, 2);
             $table->decimal('transportasi', 15, 2);
             $table->decimal('uang_makan', 15, 2);
@@ -24,7 +25,11 @@ class CreateGajiTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('gajis');
+        Schema::table('gajis', function (Blueprint $table) {
+            $table->date('tanggal_gajian')->nullable();
+            $table->dropColumn('bulan');
+            $table->dropColumn('tahun');
+        });
     }
 }
 

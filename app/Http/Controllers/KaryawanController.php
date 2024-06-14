@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Gaji;
@@ -41,7 +40,8 @@ class KaryawanController extends Controller
         // Buat data gaji baru
         Gaji::create([
             'karyawan_id' => $karyawan->id,
-            'tanggal_gajian' => now(), // Atur tanggal gajian sesuai kebutuhan
+            'bulan' => now()->month,
+            'tahun' => now()->year,
             'gaji_pokok' => $jabatan->gaji_pokok,
             'transportasi' => $jabatan->transportasi,
             'uang_makan' => $jabatan->uang_makan,
@@ -81,7 +81,8 @@ class KaryawanController extends Controller
         // Buat data gaji baru
         Gaji::create([
             'karyawan_id' => $karyawan->id,
-            'tanggal_gajian' => now(), // Atur tanggal gajian sesuai kebutuhan
+            'bulan' => now()->month,
+            'tahun' => now()->year,
             'gaji_pokok' => $jabatan->gaji_pokok,
             'transportasi' => $jabatan->transportasi,
             'uang_makan' => $jabatan->uang_makan,
@@ -102,4 +103,3 @@ class KaryawanController extends Controller
         return redirect()->route('karyawan.index');
     }
 }
-

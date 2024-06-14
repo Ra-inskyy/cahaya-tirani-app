@@ -16,6 +16,8 @@ class CreateAbsensTable extends Migration
             $table->integer('hadir');
             $table->integer('sakit');
             $table->integer('alpha');
+            $table->date('bulan');
+            $table->date('tahun');
             $table->timestamps();
 
             $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('cascade');

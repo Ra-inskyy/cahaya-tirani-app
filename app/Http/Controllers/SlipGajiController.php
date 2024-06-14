@@ -22,8 +22,8 @@ class SlipGajiController extends Controller
         $year = intval($request->input('year'));
 
         $gaji = Gaji::where('karyawan_id', $karyawanId)
-                    ->whereMonth('tanggal_gajian', $month)
-                    ->whereYear('tanggal_gajian', $year)
+                    ->where('bulan', $month)
+                    ->where('tahun', $year)
                     ->first();
 
         $karyawan = Karyawan::findOrFail($karyawanId);
@@ -37,8 +37,8 @@ class SlipGajiController extends Controller
         $year = intval($year);
 
         $gaji = Gaji::where('karyawan_id', $karyawanId)
-                    ->whereMonth('tanggal_gajian', $month)
-                    ->whereYear('tanggal_gajian', $year)
+                    ->where('bulan', $month)
+                    ->where('tahun', $year)
                     ->first();
 
         $karyawan = Karyawan::findOrFail($karyawanId);

@@ -1,7 +1,5 @@
 <?php
 
-// app/Models/Gaji.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,12 +11,13 @@ class Gaji extends Model
 
     protected $fillable = [
         'karyawan_id',
-        'tanggal_gajian',
+        'bulan',
+        'tahun',
         'gaji_pokok',
         'transportasi',
         'uang_makan',
         'total_gaji',
-        'deduction',
+        'deduction'
     ];
 
     public function karyawan()
@@ -26,4 +25,3 @@ class Gaji extends Model
         return $this->belongsTo(Karyawan::class);
     }
 }
-

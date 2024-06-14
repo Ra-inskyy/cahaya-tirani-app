@@ -1,20 +1,59 @@
-<!-- resources/views/slip-gaji/cetak.blade.php -->
+<!-- resources/views/laporan/gaji/cetak.blade.php -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cetak Slip Gaji</title>
+    <title>Laporan Gaji</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h1>Slip Gaji</h1>
-    <p>Nama: {{ $karyawan->nama }}</p>
-    <p>Jabatan: {{ $karyawan->jabatan->nama_jabatan }}</p>
-    <p>Gaji Pokok: {{ number_format($gaji->gaji_pokok, 0, ',', '.') }}</p>
-    <p>Transportasi: {{ number_format($gaji->transportasi, 0, ',', '.') }}</p>
-    <p>Uang Makan: {{ number_format($gaji->uang_makan, 0, ',', '.') }}</p>
-    <p>Total Gaji: {{ number_format($gaji->total_gaji, 0, ',', '.') }}</p>
-
-    <a href="{{ route('slip.gaji.cetak.pdf', ['karyawan_id' => $karyawan->id, 'month' => $month, 'year' => $year]) }}" target="_blank">
-        <button type="button">Cetak PDF</button>
-    </a>
+    <h2>Laporan Gaji</h2>
+    <p>Bulan: {{ DateTime::createFromFormat('!m', $bulan)->format('F') }} Tahun: {{ $tahun }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama Karyawan</th>
+                <th>Jabatan</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
+                <th>Gaji Pokok</th>
+                <th>Transportasi</th>
+                <th>Uang Makan</th>
+                <th>Total Gaji</th>
+                <th>Deduction</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($gaji as $g)
+                <tr>
+                    <td>{{ $g->id }}</td>
+                    <td>{{ $g->karyawan->nama }}</td>
+                    <td>{{ $g->karyawan->jabatan->nama_jabatan }}</td>
+                    <td>{{ \Carbon\Carbon::parse($g->tanggal_gajian)->format('F') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($g->tanggal_gajian)->format('Y') }}</td>
+                    <td>{{ $g->gaji_pokok }}</td>
+                    <td>{{ $g->transportasi }}</td>
+                    <td>{{ $g->uang_makan }}</td>
+                    <td>{{ $g->total_gaji }}</td>
+                    <td>{{ $g->deduction }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>

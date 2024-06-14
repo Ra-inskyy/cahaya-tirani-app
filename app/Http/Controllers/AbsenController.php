@@ -1,7 +1,4 @@
 <?php
-
-// app/Http/Controllers/AbsenController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Absen;
@@ -13,7 +10,20 @@ class AbsenController extends Controller
 {
     public function index(Request $request)
     {
-        $absens = Absen::with('karyawan')->get();
+        $query = Absen::query()->with('karyawan');
+
+        if ($request->has('bulan') && $request->has('tahun')) {
+            $bulan = $request->input('bulan');
+            $tahun = $request->input('tahun');
+            $query->where('bulan', $bulan)->where('tahun', $tahun);
+        }
+
+        if ($request->has('karyawan_id')) {
+            $query->where('karyawan_id', $request->input('karyawan_id'));
+        }
+
+        $absens = $query->orderBy('bulan')->orderBy('tahun')->get();
+
         return view('absens.index', compact('absens'));
     }
 
@@ -24,43 +34,48 @@ class AbsenController extends Controller
     }
 
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'hadir' => 'required|array',
-        'sakit' => 'required|array',
-        'alpha' => 'required|array',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'bulan' => 'required|integer|min:1|max:12',
+            'tahun' => 'required|integer|min:2000|max:' . date('Y'),
+            'hadir' => 'required|array',
+            'sakit' => 'required|array',
+            'alpha' => 'required|array',
+        ]);
 
-    foreach ($request->hadir as $karyawanId => $hadir) {
-        $sakit = $request->sakit[$karyawanId];
-        $alpha = $request->alpha[$karyawanId];
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
 
-        // Update or create absen record
-        $absen = Absen::updateOrCreate(
-            ['karyawan_id' => $karyawanId],
-            ['hadir' => $hadir, 'sakit' => $sakit, 'alpha' => $alpha]
-        );
+        foreach ($request->hadir as $karyawanId => $hadir) {
+            $sakit = $request->sakit[$karyawanId];
+            $alpha = $request->alpha[$karyawanId];
 
-        // Calculate deductions
-        $deduction = ($sakit + $alpha) * 25000;
+            // Update or create absen record
+            $absen = Absen::updateOrCreate(
+                ['karyawan_id' => $karyawanId, 'bulan' => $bulan, 'tahun' => $tahun],
+                ['hadir' => $hadir, 'sakit' => $sakit, 'alpha' => $alpha]
+            );
 
-        // Update or create Gaji record
-        $karyawan = Karyawan::findOrFail($karyawanId);
-        $jabatan = $karyawan->jabatan;
-        $totalGaji = $jabatan->gaji_pokok + $jabatan->transportasi + $jabatan->uang_makan - $deduction;
+            // Calculate deductions
+            $deduction = $sakit * 25000 + $alpha * 50000;
 
-        Gaji::updateOrCreate(
-            ['karyawan_id' => $karyawan->id, 'tanggal_gajian' => now()->format('Y-m')],
-            [
-                'gaji_pokok' => $jabatan->gaji_pokok,
-                'transportasi' => $jabatan->transportasi,
-                'uang_makan' => $jabatan->uang_makan,
-                'total_gaji' => $totalGaji,
-                'deduction' => $deduction,
-            ]
-        );
+            // Update or create Gaji record
+            $karyawan = Karyawan::findOrFail($karyawanId);
+            $jabatan = $karyawan->jabatan;
+            $totalGaji = $jabatan->gaji_pokok + $jabatan->transportasi + $jabatan->uang_makan - $deduction;
+
+            Gaji::updateOrCreate(
+                ['karyawan_id' => $karyawan->id, 'bulan' => $bulan, 'tahun' => $tahun],
+                [
+                    'gaji_pokok' => $jabatan->gaji_pokok,
+                    'transportasi' => $jabatan->transportasi,
+                    'uang_makan' => $jabatan->uang_makan,
+                    'total_gaji' => $totalGaji,
+                    'deduction' => $deduction,
+                ]
+            );
+        }
+
+        return redirect()->route('absens.index')->with('success', 'Absensi berhasil ditambahkan.');
     }
-
-    return redirect()->route('absens.index')->with('success', 'Absensi berhasil ditambahkan.');
-}
 }

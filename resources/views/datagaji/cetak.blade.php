@@ -1,6 +1,23 @@
-<x-app-layout>
-
-<div class="container">
+resources/views/laporan/gaji/cetak.blade.php
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Laporan Gaji</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
 <h1>Slip Gaji</h1>
     <p>Karyawan: {{ $karyawan->nama }}</p>
     <p>Bulan: {{ $month }}</p>
@@ -19,5 +36,5 @@
     <form action="{{ route('slip-gaji.cetakPdf', ['karyawanId' => $karyawan->id, 'month' => $month, 'year' => $year]) }}" method="GET">
         <button type="submit">Cetak PDF</button>
     </form>
-</div>
-</x-app-layout>
+</body>
+</html>

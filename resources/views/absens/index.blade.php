@@ -36,6 +36,8 @@
                 <th>Nama Karyawan</th>
                 <th>Jenis Kelamin</th>
                 <th>Jabatan</th>
+                <th>Bulan</th>
+                <th>Tahun</th>
                 <th>Hadir</th>
                 <th>Sakit</th>
                 <th>Alpha</th>
@@ -49,6 +51,8 @@
                     <td>{{ $absen->karyawan->nama }}</td>
                     <td>{{ $absen->karyawan->jenis_kelamin }}</td>
                     <td>{{ $absen->karyawan->jabatan->nama_jabatan }}</td>
+                    <td>{{ $absen->bulan }}</td>
+                    <td>{{ $absen->tahun }}</td>
                     <td>{{ $absen->hadir }}</td>
                     <td>{{ $absen->sakit }}</td>
                     <td>{{ $absen->alpha }}</td>

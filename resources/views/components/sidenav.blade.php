@@ -25,7 +25,7 @@
           <span class="">Master Data</span>
         </a>
         <div x-show="dropdownOpen" x-transition:enter="transition ease-out duration-100 transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75 transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="bg-white shadow-lg rounded-lg mt-2">
-          <a href="/datauser" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Data User</a>
+          <a href="/users" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Data User</a>
           <a href="/karyawan" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Data Karyawan</a>
           <a href="{{ route('jabatan.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Data Jabatan</a>
         </div>
@@ -38,7 +38,7 @@
         </a>
         <div x-show="dropdownOpen2" x-transition:enter="transition ease-out duration-100 transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75 transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="bg-white shadow-lg rounded-lg mt-2">
           <a href="/absens" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Rekap Absen</a>
-          <a href="/laporan/gaji" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Data Gaji</a>
+          <a href="/datagaji" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Data Gaji</a>
         </div>
         <a href="/laporan" class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out" @click.prevent="dropdownOpen3 = !dropdownOpen3">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 inline-block">
