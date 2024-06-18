@@ -1,5 +1,6 @@
 <x-app-layout>
 <div class="container">
+    <h1>Laporan Gaji</h1>
     <form action="{{ route('datagaji.cetak') }}" method="GET">
         <div class="form-group">
             <label for="bulan">Masukkan Bulan:</label>

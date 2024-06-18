@@ -25,8 +25,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Filter</button>
     </form>
-
-    <h2>Laporan Gaji</h2>
+    <br>
+    <h2>Data Gaji</h2>
     <table class="table">
         <thead>
             <tr>

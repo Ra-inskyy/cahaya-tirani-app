@@ -1,43 +1,28 @@
 <x-app-layout>
 <div class="card">
-    <div class="card-header">Data Karyawan</div>
+    <div class="card-header">Edit Jabatan</div>
     <div class="card-body">
-        <a href="{{ route('karyawan.create') }}" class="btn btn-primary mb-3">Tambah Karyawan</a>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>NIK</th>
-                    <th>Nama Karyawan</th>
-                    <th>Jenis Kelamin</th>
-                    <th>Jabatan</th>
-                    <th>Tanggal Masuk</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($karyawans as $karyawan)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $karyawan->nik }}</td>
-                        <td>{{ $karyawan->nama }}</td>
-                        <td>{{ $karyawan->jenis_kelamin }}</td>
-                        <td>{{ $karyawan->jabatan->nama_jabatan }}</td>
-                        <td>{{ $karyawan->tanggal_masuk }}</td>
-                        <td>{{ $karyawan->status }}</td>
-                        <td>
-                            <a href="{{ route('karyawan.edit', $karyawan->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('karyawan.destroy', $karyawan->id) }}" method="POST" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <form action="{{ route('jabatan.update', $jabatan->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="form-group">
+                <label>Nama Jabatan</label>
+                <input type="text" name="nama_jabatan" class="form-control" value="{{ $jabatan->nama_jabatan }}" required>
+            </div>
+            <div class="form-group">
+                <label>Gaji Pokok</label>
+                <input type="number" name="gaji_pokok" class="form-control" value="{{ $jabatan->gaji_pokok }}" required>
+            </div>
+            <div class="form-group">
+                <label>Transportasi</label>
+                <input type="number" name="transportasi" class="form-control" value="{{ $jabatan->transportasi }}" required>
+            </div>
+            <div class="form-group">
+                <label>Uang Makan</label>
+                <input type="number" name="uang_makan" class="form-control" value="{{ $jabatan->uang_makan }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
 </div>
 </x-app-layout>

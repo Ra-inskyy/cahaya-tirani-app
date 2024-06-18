@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -26,6 +25,11 @@ class SlipGajiController extends Controller
                     ->where('tahun', $year)
                     ->first();
 
+        if (!$gaji) {
+            return redirect()->route('slip-gaji.index')
+                             ->with('error', 'Data gaji tidak ditemukan untuk karyawan dan periode yang dipilih.');
+        }
+
         $karyawan = Karyawan::findOrFail($karyawanId);
 
         return view('slip-gaji.cetak', compact('karyawan', 'gaji', 'month', 'year'));
@@ -40,6 +44,11 @@ class SlipGajiController extends Controller
                     ->where('bulan', $month)
                     ->where('tahun', $year)
                     ->first();
+
+        if (!$gaji) {
+            return redirect()->route('slip-gaji.index')
+                             ->with('error', 'Data gaji tidak ditemukan untuk karyawan dan periode yang dipilih.');
+        }
 
         $karyawan = Karyawan::findOrFail($karyawanId);
 

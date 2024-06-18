@@ -9,17 +9,15 @@ class CreateGajiTable extends Migration
     public function up()
     {
         Schema::create('gajis', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('karyawan_id');
-            $table->integer('bulan')->after('karyawan_id')->nullable(false);
-            $table->integer('tahun')->after('bulan')->nullable(false);
+            $table->integer('bulan');
+            $table->integer('tahun');
             $table->decimal('gaji_pokok', 15, 2);
             $table->decimal('transportasi', 15, 2);
             $table->decimal('uang_makan', 15, 2);
             $table->decimal('total_gaji', 15, 2);
             $table->timestamps();
-
-            $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('cascade');
         });
     }
 

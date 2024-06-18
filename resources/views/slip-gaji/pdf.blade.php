@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
+    
 <head>
     <title>Slip Gaji PDF</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Poppins", "sans-serif";
         }
         .container {
             margin: 0 auto;
@@ -31,11 +32,14 @@
             text-align: center;
         }
     </style>
+    <div class="header" >
+    <h1>CV Cahaya Tirani</h1>
+</div>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Slip Gaji</h1>
+        <div class="header" >
+            <h2>Slip Gaji</h2>
             <p>Bulan: {{ \Carbon\Carbon::create()->month($month)->format('F') }} {{ $year }}</p>
         </div>
         <div class="content">
